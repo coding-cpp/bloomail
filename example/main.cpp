@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
   std::string emailUsername = brewtils::env::get("EMAIL_USERNAME");
   std::string emailPassword = brewtils::env::get("EMAIL_PASSWORD");
 
-  bloomail::Client::Gmail gmail = bloomail::Client::Gmail(true);
+  bloomail::Client::Gmail gmail = bloomail::Client::Gmail();
   gmail.login(emailUsername, emailPassword);
 
   logger::success("Logged in successfully for " + emailUsername + "!");
@@ -22,6 +22,8 @@ int main(int argc, char **argv) {
   gmail.setMessage("Hi!\n\nThis is a test message sent using bloomail " +
                    version + "\n\nThanks!");
   gmail.sendEmail();
+
+  logger::success("Email sent successfully, check inbox!");
 
   return EXIT_SUCCESS;
 }

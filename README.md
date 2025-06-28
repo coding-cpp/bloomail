@@ -1,2 +1,5 @@
-# bloomail
-Mailing library for C++
+# Bloomail
+
+![](./assets/build.png)
+
+![](./assets/start.png)
