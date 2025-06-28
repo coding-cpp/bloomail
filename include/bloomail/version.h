@@ -1,0 +1,5 @@
+#pragma once
+
+#define BLOOMAIL_VERSION_MAJOR 0
+#define BLOOMAIL_VERSION_MINOR 1
+#define BLOOMAIL_VERSION_PATCH 0

@@ -1,34 +1,35 @@
 #pragma once
 
+#include <set>
+
 #include <brewtils/base64.h>
 
-#include <bloomail/helper_clients/tls_client.h>
+#include <bloomail/base_clients/i_base_client.h>
+#include <bloomail/helper_clients/tls.h>
 
 namespace bloomail {
 
 namespace BaseClient {
 
-class Smtp {
+class Smtp : public IBaseClient {
 private:
-  bool debug;
   bool tlsConnected;
-  std::string username;
-  std::string password;
 
   bloomail::HelperClient::Tcp tcp;
   bloomail::HelperClient::Tls tls;
 
-  void send(const std::string &cmd);
-  std::string recv();
+  void send(const std::string &cmd) override;
+  std::string recv() override;
   void startTls();
-  void authenticate();
-  void quit();
+  void authenticate() override;
+  void quit() override;
 
 public:
   Smtp(const std::string &host, int port, bool debug = false);
   ~Smtp();
 
   void login(const std::string &username, const std::string &password);
+  void sendEmail() override;
 };
 
 } // namespace BaseClient

@@ -1,4 +1,4 @@
-#include <bloomail/helper_clients/tcp_client.h>
+#include <bloomail/helper_clients/tcp.h>
 
 bloomail::HelperClient::Tcp::Tcp(const std::string &host, int port) {
   addrinfo hints{}, *res;

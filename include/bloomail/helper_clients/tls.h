@@ -1,8 +1,9 @@
 #pragma once
 
+#include <openssl/err.h>
 #include <openssl/ssl.h>
 
-#include <bloomail/helper_clients/tcp_client.h>
+#include <bloomail/helper_clients/tcp.h>
 
 namespace bloomail {
 

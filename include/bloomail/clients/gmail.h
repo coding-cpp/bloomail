@@ -1,6 +1,6 @@
 #pragma once
 
-#include <bloomail/base_clients/smtp_client.h>
+#include <bloomail/base_clients/smtp.h>
 
 namespace bloomail {
 

@@ -1,4 +1,4 @@
-#include <bloomail/helper_clients/tls_client.h>
+#include <bloomail/helper_clients/tls.h>
 
 bloomail::HelperClient::Tls::Tls(bloomail::HelperClient::Tcp &client)
     : tcp(client) {
@@ -26,6 +26,7 @@ void bloomail::HelperClient::Tls::connect() {
   this->ssl = SSL_new(ctx);
   SSL_set_fd(this->ssl, this->tcp.socket());
   if (SSL_connect(this->ssl) <= 0) {
+    ERR_print_errors_fp(stderr);
     logger::error("TLS Handshake failed",
                   "void bloomail::HelperClient::Tls::connect()");
   }
