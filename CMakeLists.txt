@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(bloomail VERSION 0.1.6)
+project(bloomail VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -15,6 +15,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(USE_INSTALL_RESOURCE_PATH "Set resource path to install location" OFF)
 
 set(BUILD_SHARED_LIBS OFF)
+
+find_package(OpenSSL REQUIRED)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE LIB_SOURCES "lib/**/src/*.cpp")
@@ -34,4 +36,10 @@ target_include_directories(bloomail
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/logger/include>
     $<INSTALL_INTERFACE:lib/brewtils/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/brewtils/include>
+)
+
+target_link_libraries(bloomail
+  PRIVATE
+    OpenSSL::SSL
+    OpenSSL::Crypto
 )

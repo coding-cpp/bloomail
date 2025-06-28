@@ -34,3 +34,6 @@
 # Folders
 .vscode
 build
+
+# Env files
+.env
