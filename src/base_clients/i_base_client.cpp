@@ -1,5 +1,8 @@
 #include <bloomail/base_clients/i_base_client.h>
 
+const std::string bloomail::BaseClient::IBaseClient::BOUNDARY =
+    "----BLOOMAIL_BOUNDARY";
+
 bloomail::BaseClient::IBaseClient::IBaseClient(bool debug) : debug(debug) {
   return;
 }
@@ -29,12 +32,30 @@ void bloomail::BaseClient::IBaseClient::setMessage(const std::string &message) {
   this->message = message;
 }
 
+void bloomail::BaseClient::IBaseClient::addAttachment(
+    const std::string &pathToFile) {
+  std::string basePath = brewtils::os::basePath(pathToFile);
+  return this->addAttachment(pathToFile, basePath);
+}
+
+void bloomail::BaseClient::IBaseClient::addAttachment(
+    const std::string &pathToFile, const std::string &fileName) {
+  if (!brewtils::os::file::exists(pathToFile)) {
+    logger::error("File " + pathToFile + " does not exist",
+                  "void bloomail::BaseClient::IBaseClient::addAttachment(const "
+                  "std::string& pathToFile, const std::string& fileName)");
+  }
+  this->attachments.emplace_back(std::make_pair(pathToFile, fileName));
+  return;
+}
+
 void bloomail::BaseClient::IBaseClient::clear() {
   this->subject.clear();
   this->message.clear();
   this->toRecipients.clear();
   this->ccRecipients.clear();
   this->bccRecipients.clear();
+  this->attachments.clear();
 }
 
 void bloomail::BaseClient::IBaseClient::validate() {

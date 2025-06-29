@@ -15,6 +15,8 @@ class Smtp : public IBaseClient {
 private:
   bool tlsConnected;
 
+  static const int CHUNK_SIZE;
+
   bloomail::HelperClient::Tcp tcp;
   bloomail::HelperClient::Tls tls;
 
@@ -24,11 +26,14 @@ private:
   void authenticate() override;
   void quit() override;
 
+  void sendHeaders();
+  void sendAttachments();
+
 public:
   Smtp(const std::string &host, int port, bool debug = false);
   ~Smtp();
 
-  void login(const std::string &username, const std::string &password);
+  void login(const std::string &username, const std::string &password) override;
   void sendEmail() override;
 };
 
