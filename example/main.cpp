@@ -8,27 +8,32 @@ int main(int argc, char **argv) {
   std::string emailUsername = brewtils::env::get("EMAIL_USERNAME");
   std::string emailPassword = brewtils::env::get("EMAIL_PASSWORD");
 
-  bloomail::Client::Gmail gmail = bloomail::Client::Gmail(true);
-  gmail.login(emailUsername, emailPassword);
+  try {
+    bloomail::Client::Gmail gmail = bloomail::Client::Gmail(true);
+    gmail.login(emailUsername, emailPassword);
 
-  logger::success("Logged in successfully for " + emailUsername + "!");
+    logger::success("Logged in successfully for " + emailUsername + "!");
 
-  std::string version = "v" + std::to_string(BLOOMAIL_VERSION_MAJOR) + "." +
-                        std::to_string(BLOOMAIL_VERSION_MINOR) + "." +
-                        std::to_string(BLOOMAIL_VERSION_PATCH);
+    std::string version = "v" + std::to_string(BLOOMAIL_VERSION_MAJOR) + "." +
+                          std::to_string(BLOOMAIL_VERSION_MINOR) + "." +
+                          std::to_string(BLOOMAIL_VERSION_PATCH);
 
-  gmail.addToRecipient("jadit19@gmail.com");
-  //   gmail.addCcRecipient("jadit19@gmail.com");
-  //   gmail.addBccRecipient("jadit19@gmail.com");
-  gmail.setSubject("[Bloomail] Test message");
-  gmail.setMessage("Hi!\n\nThis is a test message with some attachments sent "
-                   "using bloomail " +
-                   version + "\n\nThanks!");
-  gmail.addAttachment("../assets/build.png");
-  gmail.addAttachment("../assets/start.png");
-  gmail.sendEmail();
+    gmail.addToRecipient("jadit19@gmail.com");
+    //   gmail.addCcRecipient("jadit19@gmail.com");
+    //   gmail.addBccRecipient("jadit19@gmail.com");
+    gmail.setSubject("[Bloomail] Test message")
+        .setMessage("Hi!\n\nThis is a test message with some attachments sent "
+                    "using bloomail " +
+                    version + "\n\nThanks!")
+        .addAttachment("../assets/build.png")
+        .addAttachment("../assets/start.png");
 
-  logger::success("Email sent successfully, check inbox!");
+    gmail.sendEmail();
+    logger::success("Email sent successfully, check inbox!");
 
-  return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
+  } catch (const std::exception &e) {
+    logger::error("Could not send message");
+    return EXIT_FAILURE;
+  }
 }

@@ -42,16 +42,16 @@ public:
                      const std::string &password) = 0;
   virtual void sendEmail() = 0;
 
-  void addToRecipient(const std::string &recipient);
-  void addCcRecipient(const std::string &recipient);
-  void addBccRecipient(const std::string &recipient);
+  IBaseClient &addToRecipient(const std::string &recipient);
+  IBaseClient &addCcRecipient(const std::string &recipient);
+  IBaseClient &addBccRecipient(const std::string &recipient);
 
-  void setSubject(const std::string &subject);
-  void setMessage(const std::string &message);
+  IBaseClient &setSubject(const std::string &subject);
+  IBaseClient &setMessage(const std::string &message);
 
-  void addAttachment(const std::string &pathToFile);
-  void addAttachment(const std::string &pathToFile,
-                     const std::string &fileName);
+  IBaseClient &addAttachment(const std::string &pathToFile);
+  IBaseClient &addAttachment(const std::string &pathToFile,
+                             const std::string &fileName);
 };
 
 } // namespace BaseClient

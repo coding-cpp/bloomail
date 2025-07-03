@@ -9,44 +9,56 @@ bloomail::BaseClient::IBaseClient::IBaseClient(bool debug) : debug(debug) {
 
 bloomail::BaseClient::IBaseClient::~IBaseClient() { return; }
 
-void bloomail::BaseClient::IBaseClient::addToRecipient(
+bloomail::BaseClient::IBaseClient &
+bloomail::BaseClient::IBaseClient::addToRecipient(
     const std::string &recipient) {
   this->toRecipients.insert(recipient);
+  return *this;
 }
 
-void bloomail::BaseClient::IBaseClient::addCcRecipient(
+bloomail::BaseClient::IBaseClient &
+bloomail::BaseClient::IBaseClient::addCcRecipient(
     const std::string &recipient) {
   this->ccRecipients.insert(recipient);
+  return *this;
 }
 
-void bloomail::BaseClient::IBaseClient::addBccRecipient(
+bloomail::BaseClient::IBaseClient &
+bloomail::BaseClient::IBaseClient::addBccRecipient(
     const std::string &recipient) {
   this->bccRecipients.insert(recipient);
+  return *this;
 }
 
-void bloomail::BaseClient::IBaseClient::setSubject(const std::string &subject) {
+bloomail::BaseClient::IBaseClient &
+bloomail::BaseClient::IBaseClient::setSubject(const std::string &subject) {
   this->subject = subject;
+  return *this;
 }
 
-void bloomail::BaseClient::IBaseClient::setMessage(const std::string &message) {
+bloomail::BaseClient::IBaseClient &
+bloomail::BaseClient::IBaseClient::setMessage(const std::string &message) {
   this->message = message;
+  return *this;
 }
 
-void bloomail::BaseClient::IBaseClient::addAttachment(
+bloomail::BaseClient::IBaseClient &
+bloomail::BaseClient::IBaseClient::addAttachment(
     const std::string &pathToFile) {
   std::string basePath = brewtils::os::basePath(pathToFile);
   return this->addAttachment(pathToFile, basePath);
 }
 
-void bloomail::BaseClient::IBaseClient::addAttachment(
-    const std::string &pathToFile, const std::string &fileName) {
+bloomail::BaseClient::IBaseClient &
+bloomail::BaseClient::IBaseClient::addAttachment(const std::string &pathToFile,
+                                                 const std::string &fileName) {
   if (!brewtils::os::file::exists(pathToFile)) {
     logger::error("File " + pathToFile + " does not exist",
                   "void bloomail::BaseClient::IBaseClient::addAttachment(const "
                   "std::string& pathToFile, const std::string& fileName)");
   }
   this->attachments.emplace_back(std::make_pair(pathToFile, fileName));
-  return;
+  return *this;
 }
 
 void bloomail::BaseClient::IBaseClient::clear() {
